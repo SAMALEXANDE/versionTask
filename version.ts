@@ -1,42 +1,51 @@
 
+interface whatsapp {
+    version: string,
+    dateOfVersion: Date,
+    bugID: string,
+    versionAuthor: string,
+    versionTypes: string
+    versionFeaturs: string
+
+}
 
 
 
 var whatsapp = [
     {
         version: "2.22.19.11",
-        up_date_version: "2022",
-        bugId: "895",
-        author: "jan koum ",
-        types: "patch",
-        featurs: 'group chat'
+        dateOfVersion: new Date("06-07-2022"),
+        bugID: "895",
+        versionAuthor: ["Jan Koum", "John", "Suga"],
+        versionTypes: "patch",
+        versionFeaturs: 'group chat'
     },
 
     {
         version: "2.22.18.16",
-        up_date_version: "2022",
-        bugId: "456",
-        author: "suga",
-        types: "enanchment",
-        featurs: "photos and videos"
+        dateOfVersion: new Date("15-09-2022"),
+        bugID: "456",
+        versionAuthor: ["Suga", "John"],
+        versionTypes: "enanchment",
+        versionFeaturs: "photos and videos"
     },
 
     {
         version: "2.22.17.13",
-        up_date_version: "2017",
-        bugId: '785',
-        author: "peter",
-        types: "majer",
-        featurs: 'documents'
+        dateOfVersion: new Date("30-05-2017"),
+        bugID: '785',
+        versionAuthor: ["Peter", "Charles"],
+        versionTypes: "majer",
+        versionFeaturs: 'documents'
     },
 
     {
         version: "2.22.16.70",
-        up_date_version: "1999",
-        bugId: "890",
-        author: "suga",
-        types: "majer",
-        featurs: "whatsapweb"
+        dateOfVersion: new Date("26-03-1999"),
+        bugID: "890",
+        versionAuthor: ["Suga", "Charles"],
+        versionTypes: "majer",
+        versionFeaturs: "whatsapweb"
     }
 
 ]
@@ -46,72 +55,69 @@ var whatsapp = [
 console.log("************************************************************************")
 
 //YEAR OF RELESE
-let up_date = whatsapp.filter(n => n.up_date_version.includes('2022'))
-// console.log(up_date)
-let update = up_date.map(n => n.version)
-// console.log(update)
-console.log(` Number of years in that partcular year ${update.length}`)
-console.log("----------------------------------------------------------------")
-console.log(`The version's are :- ${update}`)
+function findYearofUpdateVersion(year: string) {
+    let upDatetYear = whatsapp.filter(n => n.dateOfVersion.toString().includes(year))
+    console.log(` ${upDatetYear.length} versions are relesed in that partcular year ${year}`)
+    console.log(upDatetYear)
+    console.log("----------------------------------------------------------------")
+}
+findYearofUpdateVersion("2022")
+
 
 console.log("****************************************************************************")
-//FINDING bugId
-let bug_id = whatsapp.filter(n => n.bugId.includes('890'))
-// console.log(bug_id)
-let bug_ID = bug_id.map(n => n.up_date_version)
-// console.log(bug_ID)
-console.log(`The year of the paricular version's bugId is ${bug_ID}`)
-
+//FINDING bugID
+function findingBugId(bugId: string) {
+    let findBug = whatsapp.filter(n => n.bugID.includes(bugId))
+    console.log(`That paricular version's bugID is ${bugId}`)
+    console.log(findBug)
+}
+findingBugId("895")
 
 console.log("**************************************************************************")
-//SO MANY WORKS OF AUTHER
-let sof_author = whatsapp.map(n => n.author)
-// console.log(sof_auther)
-let emt_obj: any = {}
-for (let i of sof_author) {
-    if (i in emt_obj) {
-        emt_obj[i] += 1
-    } else {
-        emt_obj[i] = 1
+// Finding which author had more Updated
+function findHighestUpdatedByAuthor() {
+    let authorNames: string[] = []
+    whatsapp.forEach(element => {
+        for (let i of element.versionAuthor) {
+            authorNames.push(i)
+        }
+    });
+    let m = 1
+    let authorName = "default";
+    let mostFrequent = 1
+    for (let i = 0; i < authorNames.length; i++) {
+        for (let j = 1; j < authorNames.length; j++) {
+            if (authorNames[i] == authorNames[j]) {
+                m++
+            }
+            if (mostFrequent < m) {
+                mostFrequent = m
+                authorName = authorNames[i]
+            }
+        }
+        m = 0
     }
+    console.log("---------------------------------------------------------------------------")
+    console.log(`The author ${authorName} has worked on more no of releases, the count is ${mostFrequent}`)
+    console.log("---------------------------------------------------------------------------")
 }
-// console.log(emt_obj)
-let repeat_authr: any = {}
-let unique_authr: any = {}
-for (let i in emt_obj) {
-    let count = 1
-    if (count == emt_obj[i]) {
-        unique_authr[i] = emt_obj[i]
-    } else {
-        repeat_authr[i] = emt_obj[i]
-
-    }
-}
-let repeted_author = `${Object.keys(repeat_authr)}`
-console.log(`The auther worked so many version is author ${repeted_author} and Total Number of contributions mady by  ${repeted_author} is  ${Object.values(repeat_authr)}`)
-
-console.log("---------------------------------")
-let aut_version = whatsapp.filter(n => n.author.includes(repeted_author))
-// console.log(aut_version)
-let author_version = aut_version.map(n => n.version)
-// console.log(author_version)
-console.log(`The versions that author ${repeted_author} worked is :- ${author_version}`)
-console.log('***********************************************************************')
 
 
 //HOW MANY TYPES OF
-let types_of_soft = whatsapp.filter(n => n.types.includes("majer"))
-// console.log(types_of_soft)
-let tot = types_of_soft.map(n => n.types)
-console.log(`Ther are ${tot.length} num of majer's in types`)
-console.log("***************************************************************")
+function howManyTypesOfVersion(typs: string) {
+    let findTypes = whatsapp.filter(n => n.versionTypes.includes(typs))
+    console.log(`Ther are ${findTypes.length} num of ${typs} in types`)
+    console.log(findTypes)
+    console.log("***************************************************************")
+}
+howManyTypesOfVersion("majer")
 
-
-//FEATURS NAME
-let fetur_s = whatsapp.filter(n => n.featurs.includes('whatsapweb'))
-// console.log(fetur_s)
-let fet = fetur_s.map(n => n.version)
-// console.log(fet)
-console.log(`Ther are ${fet.length}  num of featurs present in vresion  ${fet}`)
-console.log("**********************************************************************")
-
+//versionTypes NAME
+function specficFeture(feture: string) {
+    let findFeturs = whatsapp.filter(n => n.versionFeaturs.includes(feture))
+    console.log(`Ther are ${findFeturs.length}  num of versionTypes present in vresion  ${feture}`)
+    console.log(findFeturs)
+    console.log("**********************************************************************")
+}
+specficFeture('documents')
+findHighestUpdatedByAuthor()
